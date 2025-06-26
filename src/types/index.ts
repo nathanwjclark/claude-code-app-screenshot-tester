@@ -27,6 +27,7 @@ export interface CaptureConfig {
   keyFramesOnly?: boolean;
   device?: string;
   throttling?: string;
+  fullPage?: boolean;
 }
 
 export interface Screenshot {

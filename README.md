@@ -16,6 +16,7 @@ This creates a much tighter development loop where Claude can make a change, cap
 ## Features
 
 - 📸 **Sequential Screenshot Capture**: Captures screenshots at configurable intervals during page load
+- 📄 **Full-Page Screenshots**: Captures entire page content by automatically scrolling
 - 🔍 **Visual Analysis**: Detects blank screens, loading indicators, and error messages
 - 📱 **Device Emulation**: Test responsive designs with built-in device profiles
 - 🌐 **Network Throttling**: Simulate different network conditions (3G, 4G, etc.)
@@ -101,6 +102,9 @@ npm run capture -- https://example.com --duration 10000 --interval 500
 
 # With custom name
 npm run capture -- --url https://example.com --name "homepage-test"
+
+# Full-page capture (great for long Panel apps)
+npm run capture -- http://localhost:5006 --full-page --duration 5000
 ```
 
 ### Analyze Captured Screenshots

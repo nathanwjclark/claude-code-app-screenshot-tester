@@ -109,7 +109,7 @@ export class ScreenshotCapturer {
     const filename = `${String(index).padStart(3, '0')}-${timestamp}ms.png`;
     const screenshotPath = path.join(this.captureDir, filename);
 
-    await this.browser.screenshot(screenshotPath);
+    await this.browser.screenshot(screenshotPath, this.config.fullPage || false);
 
     // Perform visual analysis
     const page = this.browser.getPage();
@@ -326,7 +326,7 @@ export class ScreenshotCapturer {
       const filename = `${String(index).padStart(3, '0')}-${timestamp}ms-ERROR.png`;
       const screenshotPath = path.join(this.captureDir, filename);
 
-      await this.browser.screenshot(screenshotPath);
+      await this.browser.screenshot(screenshotPath, this.config.fullPage || false);
 
       const screenshot: Screenshot = {
         filename,

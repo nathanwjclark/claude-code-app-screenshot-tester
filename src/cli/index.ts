@@ -28,6 +28,7 @@ program
   .option('--viewport <dimensions>', 'Viewport dimensions (e.g., 1280x720)', '1280x720')
   .option('--wait-for <selector>', 'CSS selector to wait for')
   .option('--key-frames-only', 'Only save key frame screenshots')
+  .option('--full-page', 'Capture full-page screenshots (scrolls entire page)')
   .action((url, options) => {
     // Support both positional and flag-based URL
     const targetUrl = url || options.url || 'http://localhost:3000';
