@@ -30,6 +30,10 @@ yarn-error.log*
 # Screenshots (local testing)
 screenshots/
 .claude-screenshots/
+test-output/
+test-edge-cases/
+baselines/
+test-e2e-screenshots/
 
 # Temporary files
 *.tmp
