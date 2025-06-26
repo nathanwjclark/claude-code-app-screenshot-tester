@@ -29,7 +29,7 @@ This creates a much tighter development loop where Claude can make a change, cap
 ### Method 1: Add as a Subfolder (Recommended)
 ```bash
 # From your project root where Claude Code is working
-git clone https://github.com/YOUR_USERNAME/app-screenshot-tester.git
+git clone https://github.com/nathanwjclark/claude-code-app-screenshot-tester.git app-screenshot-tester
 cd app-screenshot-tester
 npm install
 npm run build
@@ -39,8 +39,8 @@ cd ..
 ### Method 2: Install Globally
 ```bash
 # Clone and build
-git clone https://github.com/YOUR_USERNAME/app-screenshot-tester.git
-cd app-screenshot-tester
+git clone https://github.com/nathanwjclark/claude-code-app-screenshot-tester.git
+cd claude-code-app-screenshot-tester
 npm install
 npm run build
 npm link  # Creates global symlink
