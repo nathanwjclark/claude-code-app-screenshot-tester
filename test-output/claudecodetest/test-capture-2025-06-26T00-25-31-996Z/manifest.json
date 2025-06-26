@@ -1,0 +1,236 @@
+{
+  "captureId": "test-capture-2025-06-26T00-25-31-996Z",
+  "metadata": {
+    "url": "https://example.com",
+    "viewport": {
+      "width": 1920,
+      "height": 1080
+    },
+    "userAgent": "Playwright",
+    "timestamp": "2025-06-26T00:25:37.723Z"
+  },
+  "screenshots": [
+    {
+      "filename": "000-0ms.png",
+      "timestamp": 0,
+      "phase": "initial",
+      "annotations": {
+        "blankScreen": false,
+        "hasContent": true,
+        "loadingIndicators": [],
+        "hasErrors": false,
+        "errorMessages": [],
+        "isKeyFrame": true
+      }
+    },
+    {
+      "filename": "001-1131ms.png",
+      "timestamp": 1131,
+      "phase": "loading",
+      "annotations": {
+        "blankScreen": false,
+        "hasContent": true,
+        "loadingIndicators": [],
+        "hasErrors": false,
+        "errorMessages": [],
+        "isKeyFrame": false
+      }
+    },
+    {
+      "filename": "002-2208ms.png",
+      "timestamp": 2208,
+      "phase": "loading",
+      "annotations": {
+        "blankScreen": false,
+        "hasContent": true,
+        "loadingIndicators": [],
+        "hasErrors": false,
+        "errorMessages": [],
+        "isKeyFrame": false
+      }
+    },
+    {
+      "filename": "003-3276ms.png",
+      "timestamp": 3276,
+      "phase": "loading",
+      "annotations": {
+        "blankScreen": false,
+        "hasContent": true,
+        "loadingIndicators": [],
+        "hasErrors": false,
+        "errorMessages": [],
+        "isKeyFrame": false
+      }
+    },
+    {
+      "filename": "004-4338ms.png",
+      "timestamp": 4338,
+      "phase": "loading",
+      "annotations": {
+        "blankScreen": false,
+        "hasContent": true,
+        "loadingIndicators": [],
+        "hasErrors": false,
+        "errorMessages": [],
+        "isKeyFrame": false
+      }
+    },
+    {
+      "filename": "005-5130ms.png",
+      "timestamp": 5130,
+      "phase": "final",
+      "annotations": {
+        "blankScreen": false,
+        "hasContent": true,
+        "loadingIndicators": [],
+        "hasErrors": false,
+        "errorMessages": [],
+        "isKeyFrame": false
+      }
+    }
+  ],
+  "analysis": {
+    "loadingDuration": 5132,
+    "keyFrames": [
+      "000-0ms.png",
+      "005-5130ms.png"
+    ],
+    "issues": [],
+    "recommendations": []
+  },
+  "performance": {
+    "metrics": [
+      {
+        "navigationStart": 0,
+        "domContentLoaded": 354.5,
+        "loadEvent": 354.89999997615814,
+        "firstContentfulPaint": 404,
+        "largestContentfulPaint": 404,
+        "resourceCount": 0,
+        "totalResourceSize": 0,
+        "slowestResource": {
+          "url": "",
+          "duration": 0,
+          "size": 0
+        },
+        "usedJSHeapSize": 10000000,
+        "totalJSHeapSize": 10000000,
+        "requestCount": 1,
+        "failedRequests": 0,
+        "timestamp": 1750897532657
+      },
+      {
+        "navigationStart": 0,
+        "domContentLoaded": 354.5,
+        "loadEvent": 354.89999997615814,
+        "firstContentfulPaint": 404,
+        "largestContentfulPaint": 404,
+        "resourceCount": 0,
+        "totalResourceSize": 0,
+        "slowestResource": {
+          "url": "",
+          "duration": 0,
+          "size": 0
+        },
+        "usedJSHeapSize": 10000000,
+        "totalJSHeapSize": 10000000,
+        "requestCount": 1,
+        "failedRequests": 0,
+        "timestamp": 1750897533736
+      },
+      {
+        "navigationStart": 0,
+        "domContentLoaded": 354.5,
+        "loadEvent": 354.89999997615814,
+        "firstContentfulPaint": 404,
+        "largestContentfulPaint": 404,
+        "resourceCount": 0,
+        "totalResourceSize": 0,
+        "slowestResource": {
+          "url": "",
+          "duration": 0,
+          "size": 0
+        },
+        "usedJSHeapSize": 10000000,
+        "totalJSHeapSize": 10000000,
+        "requestCount": 1,
+        "failedRequests": 0,
+        "timestamp": 1750897534804
+      },
+      {
+        "navigationStart": 0,
+        "domContentLoaded": 354.5,
+        "loadEvent": 354.89999997615814,
+        "firstContentfulPaint": 404,
+        "largestContentfulPaint": 404,
+        "resourceCount": 0,
+        "totalResourceSize": 0,
+        "slowestResource": {
+          "url": "",
+          "duration": 0,
+          "size": 0
+        },
+        "usedJSHeapSize": 10000000,
+        "totalJSHeapSize": 10000000,
+        "requestCount": 1,
+        "failedRequests": 0,
+        "timestamp": 1750897535865
+      },
+      {
+        "navigationStart": 0,
+        "domContentLoaded": 354.5,
+        "loadEvent": 354.89999997615814,
+        "firstContentfulPaint": 404,
+        "largestContentfulPaint": 404,
+        "resourceCount": 0,
+        "totalResourceSize": 0,
+        "slowestResource": {
+          "url": "",
+          "duration": 0,
+          "size": 0
+        },
+        "usedJSHeapSize": 10000000,
+        "totalJSHeapSize": 10000000,
+        "requestCount": 1,
+        "failedRequests": 0,
+        "timestamp": 1750897536953
+      },
+      {
+        "navigationStart": 0,
+        "domContentLoaded": 354.5,
+        "loadEvent": 354.89999997615814,
+        "firstContentfulPaint": 404,
+        "largestContentfulPaint": 404,
+        "resourceCount": 0,
+        "totalResourceSize": 0,
+        "slowestResource": {
+          "url": "",
+          "duration": 0,
+          "size": 0
+        },
+        "usedJSHeapSize": 10000000,
+        "totalJSHeapSize": 10000000,
+        "requestCount": 1,
+        "failedRequests": 0,
+        "timestamp": 1750897537721
+      }
+    ],
+    "summary": {
+      "initialLoad": {
+        "domContentLoaded": 354.5,
+        "loadEvent": 354.89999997615814,
+        "firstContentfulPaint": 404
+      },
+      "finalState": {
+        "totalRequests": 1,
+        "failedRequests": 0,
+        "totalResourceSize": 0,
+        "resourceCount": 0
+      },
+      "webVitals": {
+        "largestContentfulPaint": 404
+      }
+    }
+  },
+  "outputDir": "test-output/claudecodetest/test-capture-2025-06-26T00-25-31-996Z"
+}
