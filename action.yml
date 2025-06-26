@@ -1,0 +1,132 @@
+name: 'App Screenshot Tester'
+description: 'Capture and analyze screenshots of web applications during loading'
+author: 'Claude Code'
+
+branding:
+  icon: 'camera'
+  color: 'blue'
+
+inputs:
+  url:
+    description: 'URL to test'
+    required: true
+  name:
+    description: 'Name for the capture session'
+    required: false
+    default: 'github-action-test'
+  duration:
+    description: 'Duration of capture in milliseconds'
+    required: false
+    default: '10000'
+  interval:
+    description: 'Interval between screenshots in milliseconds'
+    required: false
+    default: '1000'
+  start-command:
+    description: 'Command to start the application (optional)'
+    required: false
+  wait-time:
+    description: 'Time to wait after starting app (seconds)'
+    required: false
+    default: '5'
+  upload-artifacts:
+    description: 'Whether to upload screenshots as artifacts'
+    required: false
+    default: 'true'
+  fail-on-issues:
+    description: 'Whether to fail the action if issues are detected'
+    required: false
+    default: 'false'
+
+outputs:
+  screenshot-dir:
+    description: 'Directory containing the captured screenshots'
+    value: ${{ steps.capture.outputs.screenshot_dir }}
+  issues-count:
+    description: 'Number of issues detected'
+    value: ${{ steps.analyze.outputs.issues_count }}
+  loading-duration:
+    description: 'Loading duration in milliseconds'
+    value: ${{ steps.analyze.outputs.loading_duration }}
+
+runs:
+  using: 'composite'
+  steps:
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '20'
+        
+    - name: Install Screenshot Tester
+      shell: bash
+      run: |
+        cd ${{ github.action_path }}
+        npm ci
+        npx playwright install chromium
+
+    - name: Start Application
+      if: ${{ inputs.start-command }}
+      shell: bash
+      run: |
+        ${{ inputs.start-command }} &
+        echo "APP_PID=$!" >> $GITHUB_ENV
+        sleep ${{ inputs.wait-time }}
+
+    - name: Wait for Application
+      if: ${{ inputs.start-command }}
+      shell: bash
+      run: |
+        timeout 60 bash -c 'until curl -f ${{ inputs.url }}/health || curl -f ${{ inputs.url }}; do sleep 1; done' || true
+
+    - name: Capture Screenshots
+      id: capture
+      shell: bash
+      run: |
+        cd ${{ github.action_path }}
+        npx tsx src/cli/index.ts capture \
+          --url "${{ inputs.url }}" \
+          --name "${{ inputs.name }}-${{ github.run_number }}" \
+          --duration ${{ inputs.duration }} \
+          --interval ${{ inputs.interval }} \
+          --output-dir ./action-screenshots
+        
+        SCREENSHOT_DIR=$(ls -td action-screenshots/${{ inputs.name }}-* | head -1)
+        echo "screenshot_dir=$SCREENSHOT_DIR" >> $GITHUB_OUTPUT
+
+    - name: Analyze Results
+      id: analyze
+      shell: bash
+      run: |
+        cd ${{ github.action_path }}
+        npx tsx src/cli/index.ts analyze ${{ steps.capture.outputs.screenshot_dir }}
+        
+        # Extract metrics from manifest
+        MANIFEST_PATH="${{ steps.capture.outputs.screenshot_dir }}/manifest.json"
+        if [ -f "$MANIFEST_PATH" ]; then
+          ISSUES_COUNT=$(jq '.analysis.issues | length' "$MANIFEST_PATH")
+          LOADING_DURATION=$(jq '.analysis.loadingDuration' "$MANIFEST_PATH")
+          echo "issues_count=$ISSUES_COUNT" >> $GITHUB_OUTPUT
+          echo "loading_duration=$LOADING_DURATION" >> $GITHUB_OUTPUT
+        fi
+
+    - name: Upload Screenshots
+      if: ${{ inputs.upload-artifacts == 'true' }}
+      uses: actions/upload-artifact@v4
+      with:
+        name: screenshots-${{ inputs.name }}-${{ github.run_number }}
+        path: ${{ github.action_path }}/action-screenshots/
+        retention-days: 30
+
+    - name: Stop Application
+      if: ${{ env.APP_PID && inputs.start-command }}
+      shell: bash
+      run: kill $APP_PID || true
+
+    - name: Check Issues
+      if: ${{ inputs.fail-on-issues == 'true' }}
+      shell: bash
+      run: |
+        if [ "${{ steps.analyze.outputs.issues_count }}" -gt "0" ]; then
+          echo "❌ Found ${{ steps.analyze.outputs.issues_count }} issues in screenshot analysis"
+          exit 1
+        fi

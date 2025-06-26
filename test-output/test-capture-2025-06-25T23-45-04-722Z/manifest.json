@@ -1,0 +1,200 @@
+{
+  "captureId": "test-capture-2025-06-25T23-45-04-722Z",
+  "metadata": {
+    "url": "https://example.com",
+    "viewport": {
+      "width": 1920,
+      "height": 1080
+    },
+    "userAgent": "Playwright",
+    "timestamp": "2025-06-25T23:45:10.300Z"
+  },
+  "screenshots": [
+    {
+      "filename": "000-0ms.png",
+      "timestamp": 0,
+      "phase": "initial",
+      "annotations": {
+        "blankScreen": false,
+        "hasContent": true,
+        "loadingIndicators": [],
+        "hasErrors": false,
+        "errorMessages": [],
+        "isKeyFrame": true
+      }
+    },
+    {
+      "filename": "001-1130ms.png",
+      "timestamp": 1130,
+      "phase": "loading",
+      "annotations": {
+        "blankScreen": false,
+        "hasContent": true,
+        "loadingIndicators": [],
+        "hasErrors": false,
+        "errorMessages": [],
+        "isKeyFrame": false
+      }
+    },
+    {
+      "filename": "002-2189ms.png",
+      "timestamp": 2189,
+      "phase": "loading",
+      "annotations": {
+        "blankScreen": false,
+        "hasContent": true,
+        "loadingIndicators": [],
+        "hasErrors": false,
+        "errorMessages": [],
+        "isKeyFrame": false
+      }
+    },
+    {
+      "filename": "003-3255ms.png",
+      "timestamp": 3255,
+      "phase": "loading",
+      "annotations": {
+        "blankScreen": false,
+        "hasContent": true,
+        "loadingIndicators": [],
+        "hasErrors": false,
+        "errorMessages": [],
+        "isKeyFrame": false
+      }
+    },
+    {
+      "filename": "004-4334ms.png",
+      "timestamp": 4334,
+      "phase": "loading",
+      "annotations": {
+        "blankScreen": false,
+        "hasContent": true,
+        "loadingIndicators": [],
+        "hasErrors": false,
+        "errorMessages": [],
+        "isKeyFrame": false
+      }
+    },
+    {
+      "filename": "005-5129ms.png",
+      "timestamp": 5129,
+      "phase": "final",
+      "annotations": {
+        "blankScreen": false,
+        "hasContent": true,
+        "loadingIndicators": [],
+        "hasErrors": false,
+        "errorMessages": [],
+        "isKeyFrame": false
+      }
+    }
+  ],
+  "analysis": {
+    "loadingDuration": 5129,
+    "keyFrames": [
+      "000-0ms.png",
+      "005-5129ms.png"
+    ],
+    "issues": [],
+    "recommendations": []
+  },
+  "performance": {
+    "metrics": [
+      {
+        "domContentLoaded": null,
+        "loadEvent": null,
+        "firstContentfulPaint": 424,
+        "largestContentfulPaint": 424,
+        "resourceCount": 0,
+        "totalResourceSize": 0,
+        "usedJSHeapSize": 10000000,
+        "totalJSHeapSize": 10000000,
+        "requestCount": 1,
+        "failedRequests": 0,
+        "timestamp": 1750895105235
+      },
+      {
+        "domContentLoaded": null,
+        "loadEvent": null,
+        "firstContentfulPaint": 424,
+        "largestContentfulPaint": 424,
+        "resourceCount": 0,
+        "totalResourceSize": 0,
+        "usedJSHeapSize": 10000000,
+        "totalJSHeapSize": 10000000,
+        "requestCount": 1,
+        "failedRequests": 0,
+        "timestamp": 1750895106296
+      },
+      {
+        "domContentLoaded": null,
+        "loadEvent": null,
+        "firstContentfulPaint": 424,
+        "largestContentfulPaint": 424,
+        "resourceCount": 0,
+        "totalResourceSize": 0,
+        "usedJSHeapSize": 10000000,
+        "totalJSHeapSize": 10000000,
+        "requestCount": 1,
+        "failedRequests": 0,
+        "timestamp": 1750895107363
+      },
+      {
+        "domContentLoaded": null,
+        "loadEvent": null,
+        "firstContentfulPaint": 424,
+        "largestContentfulPaint": 424,
+        "resourceCount": 0,
+        "totalResourceSize": 0,
+        "usedJSHeapSize": 10000000,
+        "totalJSHeapSize": 10000000,
+        "requestCount": 1,
+        "failedRequests": 0,
+        "timestamp": 1750895108437
+      },
+      {
+        "domContentLoaded": null,
+        "loadEvent": null,
+        "firstContentfulPaint": 424,
+        "largestContentfulPaint": 424,
+        "resourceCount": 0,
+        "totalResourceSize": 0,
+        "usedJSHeapSize": 10000000,
+        "totalJSHeapSize": 10000000,
+        "requestCount": 1,
+        "failedRequests": 0,
+        "timestamp": 1750895109527
+      },
+      {
+        "domContentLoaded": null,
+        "loadEvent": null,
+        "firstContentfulPaint": 424,
+        "largestContentfulPaint": 424,
+        "resourceCount": 0,
+        "totalResourceSize": 0,
+        "usedJSHeapSize": 10000000,
+        "totalJSHeapSize": 10000000,
+        "requestCount": 1,
+        "failedRequests": 0,
+        "timestamp": 1750895110299
+      }
+    ],
+    "summary": {
+      "initialLoad": {
+        "domContentLoaded": null,
+        "loadEvent": null,
+        "firstContentfulPaint": 424
+      },
+      "finalState": {
+        "totalRequests": 1,
+        "failedRequests": 0,
+        "totalResourceSize": 0,
+        "resourceCount": 0
+      },
+      "webVitals": {
+        "largestContentfulPaint": 424
+      }
+    }
+  },
+  "outputDir": "test-output/test-capture-2025-06-25T23-45-04-722Z"
+}

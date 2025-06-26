@@ -1,0 +1,157 @@
+name: Screenshot Testing
+
+on:
+  pull_request:
+    branches: [ main, develop ]
+  workflow_call:
+    inputs:
+      app_url:
+        description: 'URL to test'
+        required: true
+        type: string
+      start_command:
+        description: 'Command to start the app'
+        required: false
+        type: string
+        default: 'npm run dev'
+      wait_time:
+        description: 'Time to wait before testing (seconds)'
+        required: false
+        type: number
+        default: 5
+      test_duration:
+        description: 'Duration of screenshot capture (ms)'
+        required: false
+        type: number
+        default: 10000
+
+jobs:
+  screenshot-test:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '20'
+        cache: 'npm'
+
+    - name: Install dependencies
+      run: npm ci
+
+    - name: Install Playwright browsers
+      run: npx playwright install chromium
+
+    - name: Start application
+      if: ${{ inputs.start_command }}
+      run: |
+        ${{ inputs.start_command }} &
+        echo "APP_PID=$!" >> $GITHUB_ENV
+        sleep ${{ inputs.wait_time }}
+
+    - name: Wait for application to be ready
+      if: ${{ inputs.start_command }}
+      run: |
+        timeout 60 bash -c 'until curl -f ${{ inputs.app_url }}/health || curl -f ${{ inputs.app_url }}; do sleep 1; done' || true
+
+    - name: Run screenshot capture
+      id: screenshot
+      run: |
+        npx tsx src/cli/index.ts capture \
+          --url "${{ inputs.app_url }}" \
+          --name "ci-test-${{ github.run_number }}" \
+          --duration ${{ inputs.test_duration }} \
+          --interval 1000 \
+          --output-dir ./ci-screenshots
+        
+        # Get the output directory
+        SCREENSHOT_DIR=$(ls -td ci-screenshots/ci-test-* | head -1)
+        echo "screenshot_dir=$SCREENSHOT_DIR" >> $GITHUB_OUTPUT
+
+    - name: Analyze screenshots
+      run: |
+        npx tsx src/cli/index.ts analyze ${{ steps.screenshot.outputs.screenshot_dir }}
+
+    - name: Upload screenshots as artifacts
+      uses: actions/upload-artifact@v4
+      if: always()
+      with:
+        name: screenshots-${{ github.run_number }}
+        path: ci-screenshots/
+        retention-days: 30
+
+    - name: Upload test results
+      uses: actions/upload-artifact@v4
+      if: always()
+      with:
+        name: test-results-${{ github.run_number }}
+        path: |
+          ${{ steps.screenshot.outputs.screenshot_dir }}/manifest.json
+        retention-days: 30
+
+    - name: Comment on PR with results
+      if: github.event_name == 'pull_request'
+      uses: actions/github-script@v7
+      with:
+        script: |
+          const fs = require('fs');
+          const path = require('path');
+          
+          const screenshotDir = '${{ steps.screenshot.outputs.screenshot_dir }}';
+          const manifestPath = path.join(screenshotDir, 'manifest.json');
+          
+          if (fs.existsSync(manifestPath)) {
+            const manifest = JSON.parse(fs.readFileSync(manifestPath, 'utf8'));
+            
+            const comment = `## 📸 Screenshot Test Results
+            
+            **Capture Summary:**
+            - URL: ${manifest.metadata.url}
+            - Screenshots: ${manifest.screenshots.length}
+            - Loading Duration: ${manifest.analysis.loadingDuration}ms
+            - Key Frames: ${manifest.analysis.keyFrames.length}
+            
+            ${manifest.analysis.issues.length > 0 ? 
+              `**⚠️ Issues Found:**\n${manifest.analysis.issues.map(issue => `- ${issue}`).join('\n')}\n` : 
+              '**✅ No issues detected**'
+            }
+            
+            **📁 Artifacts:**
+            - [Download Screenshots](https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }})
+            
+            <details>
+            <summary>Key Frames</summary>
+            
+            ${manifest.analysis.keyFrames.map(frame => `- ${frame}`).join('\n')}
+            
+            </details>`;
+            
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: comment
+            });
+          }
+
+    - name: Stop application
+      if: ${{ env.APP_PID && inputs.start_command }}
+      run: |
+        kill $APP_PID || true
+
+    - name: Check for critical issues
+      run: |
+        MANIFEST_PATH="${{ steps.screenshot.outputs.screenshot_dir }}/manifest.json"
+        if [ -f "$MANIFEST_PATH" ]; then
+          ISSUES_COUNT=$(jq '.analysis.issues | length' "$MANIFEST_PATH")
+          if [ "$ISSUES_COUNT" -gt 0 ]; then
+            echo "❌ Found $ISSUES_COUNT issues in screenshot analysis"
+            jq -r '.analysis.issues[]' "$MANIFEST_PATH"
+            exit 1
+          else
+            echo "✅ No critical issues found"
+          fi
+        fi

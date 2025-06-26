@@ -1,0 +1,37 @@
+{
+  "name": "app-screenshot-tester",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsx src/cli/index.ts",
+    "test": "vitest",
+    "test:ui": "vitest --ui",
+    "test:watch": "vitest --watch",
+    "test:coverage": "vitest run --coverage"
+  },
+  "bin": {
+    "app-screenshot-tester": "./dist/cli/index.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@types/node": "^24.0.3",
+    "chalk": "^5.4.1",
+    "commander": "^14.0.0",
+    "playwright": "^1.53.1",
+    "pngjs": "^7.0.0",
+    "tsx": "^4.20.3",
+    "typescript": "^5.8.3"
+  },
+  "devDependencies": {
+    "@types/commander": "^2.12.5",
+    "@types/pngjs": "^6.0.5",
+    "@vitest/ui": "^3.2.4",
+    "c8": "^10.1.3",
+    "vitest": "^3.2.4"
+  }
+}
