@@ -1,10 +1,17 @@
-# App Screenshot Tester
+# App Screenshot Tester for Claude Code
 
-A command-line tool designed for Claude Code to capture and analyze web application loading sequences through automated screenshots.
+A command-line tool that gives Claude Code "eyes" to see your web applications, enabling visual debugging and frontend development with a tighter feedback loop.
 
-## Overview
+## Why This Tool Exists
 
-This tool helps developers debug loading issues, verify responsive designs, and detect JavaScript errors by capturing screenshots at regular intervals during page load. It's specifically designed to work with Claude Code's multimodal capabilities, allowing direct analysis of captured images.
+Claude Code normally can't "see" the applications it's developing - it can only work with code and text output. This tool bridges that gap by capturing screenshots during app loading and runtime, allowing Claude to:
+- **See what users see**: Verify that UI changes actually render correctly
+- **Debug visual issues**: Identify blank screens, layout problems, or missing elements
+- **Test responsiveness**: Ensure designs work across different devices and viewports
+- **Catch loading errors**: Detect JavaScript errors or failed resource loads visually
+- **Expedite frontend development**: Get immediate visual feedback on CSS and layout changes
+
+This creates a much tighter development loop where Claude can make a change, capture screenshots, analyze the visual output, and iterate - just like a human developer would.
 
 ## Features
 
@@ -17,11 +24,58 @@ This tool helps developers debug loading issues, verify responsive designs, and 
 - 🔄 **Visual Regression Testing**: Compare screenshots against baselines
 - 🚀 **CI/CD Integration**: GitHub Actions workflow support
 
-## Installation
+## Installation for Claude Code Projects
 
+### Method 1: Add as a Subfolder (Recommended)
 ```bash
+# From your project root where Claude Code is working
+git clone https://github.com/YOUR_USERNAME/app-screenshot-tester.git
+cd app-screenshot-tester
 npm install
 npm run build
+cd ..
+```
+
+### Method 2: Install Globally
+```bash
+# Clone and build
+git clone https://github.com/YOUR_USERNAME/app-screenshot-tester.git
+cd app-screenshot-tester
+npm install
+npm run build
+npm link  # Creates global symlink
+
+# Now use from any project
+claude-screenshot capture http://localhost:3000
+```
+
+### Method 3: Add to CLAUDE.md
+Add these instructions to your project's CLAUDE.md file so Claude knows to use it:
+
+```markdown
+## Screenshot Testing Tool
+When debugging web apps, use the screenshot tool at ./app-screenshot-tester/:
+- Capture: `cd app-screenshot-tester && npm run capture -- <URL>`
+- Analyze: `npm run analyze -- ../.claude-screenshots/<project>/<capture-id>`
+- View screenshots: Use Read tool on PNG files in .claude-screenshots/
+```
+
+## Quick Start Example
+
+Here's how Claude Code would use this tool in a typical frontend debugging session:
+
+```bash
+# 1. Make a CSS change to your app
+# 2. Capture screenshots to see the result
+cd app-screenshot-tester && npm run capture -- http://localhost:3000 --duration 3000
+
+# 3. Claude can now view the screenshots using the Read tool
+# Read: ../.claude-screenshots/your-project/capture-id/000-0ms.png
+
+# 4. If something looks wrong, Claude can analyze the capture
+npm run analyze -- ../.claude-screenshots/your-project/capture-id
+
+# 5. Make fixes and capture again to verify
 ```
 
 ## Usage

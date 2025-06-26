@@ -1,8 +1,8 @@
 {
-  "name": "app-screenshot-tester",
+  "name": "claude-screenshot-tester",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "description": "Give Claude Code eyes to see your web applications - automated screenshot capture and analysis tool",
+  "main": "dist/cli/index.js",
   "type": "module",
   "scripts": {
     "build": "tsc",
@@ -10,14 +10,24 @@
     "test": "vitest",
     "test:ui": "vitest --ui",
     "test:watch": "vitest --watch",
-    "test:coverage": "vitest run --coverage"
+    "test:coverage": "vitest run --coverage",
+    "capture": "tsx src/cli/index.ts capture",
+    "analyze": "tsx src/cli/index.ts analyze",
+    "test-app": "tsx src/cli/index.ts test"
   },
   "bin": {
-    "app-screenshot-tester": "./dist/cli/index.js"
+    "claude-screenshot": "./dist/cli/index.js"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "keywords": ["claude-code", "screenshot", "testing", "playwright", "visual-testing", "frontend", "debugging"],
+  "author": "Claude Code Community",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/YOUR_USERNAME/app-screenshot-tester.git"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
   "dependencies": {
     "@types/node": "^24.0.3",
     "chalk": "^5.4.1",
