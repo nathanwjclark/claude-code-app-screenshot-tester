@@ -26,7 +26,9 @@ This creates a much tighter development loop where Claude can make a change, cap
 
 ## Installation for Claude Code Projects
 
-### Method 1: Add as a Subfolder (Recommended)
+### Step 1: Install the Tool
+
+#### Option A: Add as a Subfolder (Recommended)
 ```bash
 # From your project root where Claude Code is working
 git clone https://github.com/nathanwjclark/claude-code-app-screenshot-tester.git app-screenshot-tester
@@ -36,7 +38,7 @@ npm run build
 cd ..
 ```
 
-### Method 2: Install Globally
+#### Option B: Install Globally
 ```bash
 # Clone and build
 git clone https://github.com/nathanwjclark/claude-code-app-screenshot-tester.git
@@ -49,19 +51,21 @@ npm link  # Creates global symlink
 claude-screenshot capture http://localhost:3000
 ```
 
-### Method 3: Add to CLAUDE.md
-Add these instructions to your project's CLAUDE.md file so Claude knows to use it:
+### Step 2: Add to CLAUDE.md (Required)
+**Important:** Always add these instructions to your project's CLAUDE.md file so Claude knows the tool is available:
 
 ```markdown
 ## Screenshot Testing Tool
 When debugging web apps, use the screenshot tool at ./app-screenshot-tester/:
-- Capture: `cd app-screenshot-tester && npm run capture -- --url <URL>`
+- Capture: `cd app-screenshot-tester && npm run capture -- <URL>`
 - Analyze: `npm run analyze -- ../.claude-screenshots/<project>/<capture-id>`
 - Test with auto-start: `npm run test-app -- --start-command "npm run dev" --url <URL>`
 - View screenshots: Use Read tool on PNG files in .claude-screenshots/
 
-Example: `npm run capture -- --url http://localhost:3000 --duration 15000`
+Example: `npm run capture -- http://localhost:3000 --duration 3000`
 ```
+
+Note: Adjust the path (`./app-screenshot-tester/`) if you installed globally or in a different location.
 
 ## Quick Start Example
 
