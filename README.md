@@ -55,9 +55,12 @@ Add these instructions to your project's CLAUDE.md file so Claude knows to use i
 ```markdown
 ## Screenshot Testing Tool
 When debugging web apps, use the screenshot tool at ./app-screenshot-tester/:
-- Capture: `cd app-screenshot-tester && npm run capture -- <URL>`
+- Capture: `cd app-screenshot-tester && npm run capture -- --url <URL>`
 - Analyze: `npm run analyze -- ../.claude-screenshots/<project>/<capture-id>`
+- Test with auto-start: `npm run test-app -- --start-command "npm run dev" --url <URL>`
 - View screenshots: Use Read tool on PNG files in .claude-screenshots/
+
+Example: `npm run capture -- --url http://localhost:3000 --duration 15000`
 ```
 
 ## Quick Start Example
@@ -66,8 +69,9 @@ Here's how Claude Code would use this tool in a typical frontend debugging sessi
 
 ```bash
 # 1. Make a CSS change to your app
-# 2. Capture screenshots to see the result
+# 2. Capture screenshots to see the result (both syntaxes work)
 cd app-screenshot-tester && npm run capture -- http://localhost:3000 --duration 3000
+# OR: npm run capture -- --url http://localhost:3000 --duration 3000
 
 # 3. Claude can now view the screenshots using the Read tool
 # Read: ../.claude-screenshots/your-project/capture-id/000-0ms.png
@@ -83,11 +87,16 @@ npm run analyze -- ../.claude-screenshots/your-project/capture-id
 ### Basic Screenshot Capture
 
 ```bash
-# Capture screenshots of a URL
+# Capture screenshots of a URL (both syntaxes work)
+npm run capture -- --url https://example.com
 npm run capture -- https://example.com
 
 # With options
+npm run capture -- --url https://example.com --duration 10000 --interval 500
 npm run capture -- https://example.com --duration 10000 --interval 500
+
+# With custom name
+npm run capture -- --url https://example.com --name "homepage-test"
 ```
 
 ### Analyze Captured Screenshots
@@ -101,24 +110,27 @@ npm run analyze -- .claude-screenshots/project-name/capture-id
 
 ```bash
 # Start app and capture screenshots
-npm run test -- --start-command "npm run dev" --url http://localhost:3000
+npm run test-app -- --start-command "npm run dev" --url http://localhost:3000
+
+# With custom wait time before capture
+npm run test-app -- --start-command "npm run dev" --url http://localhost:3000 --wait-before-capture 5000
 ```
 
 ### Device Emulation
 
 ```bash
 # Emulate iPhone 12
-npm run capture -- https://example.com --device "iPhone 12"
+npm run capture -- --url https://example.com --device "iPhone 12"
 
 # Emulate iPad with custom viewport
-npm run capture -- https://example.com --device "iPad" --viewport 1024x768
+npm run capture -- --url https://example.com --device "iPad" --viewport 1024x768
 ```
 
 ### Network Throttling
 
 ```bash
 # Simulate slow 3G
-npm run capture -- https://example.com --throttle slow-3g
+npm run capture -- --url https://example.com --throttle slow-3g
 ```
 
 ## Screenshot Storage
@@ -127,6 +139,18 @@ Screenshots are stored in `.claude-screenshots/<project-name>/<timestamp>/` with
 - PNG images numbered sequentially (000-0ms.png, 001-500ms.png, etc.)
 - `manifest.json` containing metadata and analysis results
 - Performance metrics for each capture
+
+Example output structure:
+```
+.claude-screenshots/
+└── my-project/
+    └── homepage-test-2025-06-26T00-14-48-217Z/
+        ├── 000-0ms.png          # Initial page load
+        ├── 001-500ms.png        # After 500ms
+        ├── 002-1000ms.png       # After 1 second
+        ├── 003-1500ms.png       # After 1.5 seconds
+        └── manifest.json        # Capture metadata & analysis
+```
 
 ## Configuration
 

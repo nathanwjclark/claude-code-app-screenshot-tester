@@ -13,7 +13,8 @@
     "test:coverage": "vitest run --coverage",
     "capture": "tsx src/cli/index.ts capture",
     "analyze": "tsx src/cli/index.ts analyze",
-    "test-app": "tsx src/cli/index.ts test"
+    "test-app": "tsx src/cli/index.ts test",
+    "quick-test": "tsx src/cli/index.ts capture"
   },
   "bin": {
     "claude-screenshot": "./dist/cli/index.js"

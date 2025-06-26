@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 
 import { Command } from 'commander';
+import chalk from 'chalk';
 import { Logger } from '../utils/logger.js';
 import { captureCommand } from './commands/capture.js';
 import { analyzeCommand } from './commands/analyze.js';
@@ -17,9 +18,9 @@ program
   .version('1.0.0');
 
 program
-  .command('capture')
+  .command('capture [url]')
   .description('Capture screenshots of an application during loading')
-  .option('-u, --url <url>', 'URL to capture', 'http://localhost:3000')
+  .option('-u, --url <url>', 'URL to capture')
   .option('-n, --name <name>', 'Name for the capture session')
   .option('-d, --duration <ms>', 'Maximum capture duration in milliseconds', '10000')
   .option('-i, --interval <ms>', 'Screenshot interval in milliseconds', '500')
@@ -27,7 +28,11 @@ program
   .option('--viewport <dimensions>', 'Viewport dimensions (e.g., 1280x720)', '1280x720')
   .option('--wait-for <selector>', 'CSS selector to wait for')
   .option('--key-frames-only', 'Only save key frame screenshots')
-  .action(captureCommand);
+  .action((url, options) => {
+    // Support both positional and flag-based URL
+    const targetUrl = url || options.url || 'http://localhost:3000';
+    captureCommand({ ...options, url: targetUrl });
+  });
 
 program
   .command('analyze <capture-dir>')
@@ -67,7 +72,28 @@ program
   .option('--validate [file]', 'Validate configuration file')
   .action(configCommand);
 
-program.parse();
+// Custom error handling
+program.exitOverride();
+
+try {
+  program.parse();
+} catch (err: any) {
+  if (err.code === 'commander.unknownOption') {
+    console.error(chalk.red('\nError: ' + err.message));
+    console.error(chalk.yellow('\nDid you mean to use --url flag?'));
+    console.error(chalk.gray('Example: npm run capture -- --url https://example.com'));
+    console.error(chalk.gray('Or:      npm run capture -- https://example.com'));
+    process.exit(1);
+  } else if (err.code === 'commander.excessArguments') {
+    console.error(chalk.red('\nError: Too many arguments provided'));
+    console.error(chalk.yellow('\nCorrect usage:'));
+    console.error(chalk.gray('  npm run capture -- --url https://example.com'));
+    console.error(chalk.gray('  npm run capture -- https://example.com'));
+    console.error(chalk.gray('\nRun with --help for more options'));
+    process.exit(1);
+  }
+  throw err;
+}
 
 // Show help if no command provided
 if (!process.argv.slice(2).length) {
