@@ -43,6 +43,22 @@ describe('captureCommand', () => {
     expect(Logger.info).toHaveBeenCalledWith('CONFIG', 'Viewport: 1280x720');
   });
 
+  it('should handle full-page option correctly', async () => {
+    const options = {
+      url: 'https://example.com',
+      duration: '5000',
+      interval: '1000',
+      outputDir: './screenshots',
+      viewport: '1280x720',
+      fullPage: true,
+    };
+
+    await captureCommand(options);
+
+    expect(Logger.info).toHaveBeenCalledWith('CAPTURE', 'Starting capture for https://example.com');
+    expect(Logger.info).toHaveBeenCalledWith('CONFIG', 'Duration: 5000ms, Interval: 1000ms');
+  });
+
   it('should handle errors gracefully', async () => {
     const mockExit = vi.spyOn(process, 'exit').mockImplementation((code?: string | number | null | undefined) => {
       throw new Error(`Process exited with code ${code}`);

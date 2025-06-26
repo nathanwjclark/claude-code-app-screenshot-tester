@@ -92,6 +92,13 @@ try {
     console.error(chalk.gray('  npm run capture -- https://example.com'));
     console.error(chalk.gray('\nRun with --help for more options'));
     process.exit(1);
+  } else if (err.code === 'commander.version') {
+    // Handle version command normally
+    console.log(err.message);
+    process.exit(0);
+  } else if (err.code === 'commander.help') {
+    // Handle help command normally
+    process.exit(0);
   }
   throw err;
 }
